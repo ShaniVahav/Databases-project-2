@@ -5,6 +5,7 @@ using BusinessEntities;
 using BusinessLogic;
 using System.Collections;
 using System.Windows.Markup;
+using System.Reflection.PortableExecutable;
 
 namespace MySqlAccess
 {
@@ -114,10 +115,12 @@ namespace MySqlAccess
                 string sql = null;
                 int id = getId();
 
+                Console.WriteLine("the value of id is"+id);
                 foreach (var item in a.fdict)
                 {
-                    sql = "INSERT INTO 'ice_cream_shop'. 'Orders' (`id_ORDER`,`id_INGREDIENT`,`amount')" +
-                    "VALUES ('" + id + " ','" + item.Key + "," + item.Value + "');";
+                    //  SELECT id_order FROM ice_cream_shop.ORDERS ORDER BY id_order DESC LIMIT 1";
+                    sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,id_INGREDIENT,amount)" +
+                    "VALUES(" + id + "," + item.Key + "," + item.Value + ");";
                     /*
 
                     if (obj is)
@@ -224,23 +227,25 @@ namespace MySqlAccess
             return all;
         }
 
-        public  static int getId() { 
+        public  static int getId() {
+            int ans= -5;
               // open connection 
                 MySqlConnection conn = new MySqlConnection(connStr);
                 Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
             // mysql query 
-
-            string sql = "SELECT 'id_SALE' FROM `Ice_Cream_Shop' ORDER BY .'id_SALE' DESC LIMIT 1";
+            string sql = "SELECT id_SALE FROM ice_cream_shop.sales ORDER BY id_SALE DESC LIMIT 1";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
-
             MySqlDataReader rdr = cmd.ExecuteReader();
-            Object[] numb = new Object[rdr.FieldCount];
-            Console.WriteLine(numb[0]);
-            rdr.GetValues(numb);
-            int ans = (int)numb[0];
+            Console.WriteLine(rdr.HasRows);
+            while (rdr.Read())
+            {  // read
+                Object[] numb = new Object[rdr.FieldCount];
+                Console.WriteLine(numb[0]); 
+                rdr.GetValues(numb);
+                ans = (int)numb[0];
+            }
             return ans;
-
         }
     }
 

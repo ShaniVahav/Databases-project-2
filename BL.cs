@@ -99,7 +99,7 @@ namespace BusinessLogic
             {
                 Console.WriteLine("The order canceled.");
             }
-
+        
             public static void bill()
             {
                 Console.WriteLine("bill");

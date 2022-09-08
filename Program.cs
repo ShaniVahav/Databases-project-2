@@ -19,8 +19,9 @@ Stopwatch stopwatch = new Stopwatch();
 int userInput = 0;
 int price = 0;
 
+int package = -1;
 var toppingsArraylist = new ArrayList();
-int iceCreamBallsNumber = 0 ;                                    /// משתנה של כמות הכדורים 
+int iceCreamBallsNumber = 0;                                    /// משתנה של כמות הכדורים 
 var fDict = new Dictionary<int, int>();  ///// פה אני יוצר את המילון 
 for (int i = 0; i < 10; i++)
 {
@@ -54,12 +55,15 @@ switch (userInput)
         switch (userInput)
         {
             case 1:
-                create_an_order.toppings_for_regular(ref fDict ,ref iceCreamBallsNumber, ref toppingsArraylist);
+                package = 1;
+                create_an_order.toppings_for_regular(ref fDict, ref iceCreamBallsNumber, ref toppingsArraylist);
                 break;
             case 2:
+                package = 2;
                 create_an_order.toppings_for_special(ref fDict, ref toppingsArraylist);
                 break;
             case 3:
+                package = 3;
                 create_an_order.toppings_for_box(ref fDict, ref toppingsArraylist);
                 break;
         }
@@ -75,14 +79,15 @@ switch (userInput)
             case 1:
                 Sale s = new Sale(DateTime.Now, price);
                 MySqlAccess.MySqlAccess.insertObject_Sale(s);
-                Console.WriteLine("The order price is " + price +" nis. Thank you!");
+                Console.WriteLine("The order price is " + price + " nis. Thank you!");
                 Console.WriteLine("1 - Check the bill");
                 Console.WriteLine("2 - New Order");
                 Console.WriteLine("3 - exit");
                 userInput = Int32.Parse(Console.ReadLine());
-                switch(userInput)
+                switch (userInput)
                 {
                     case 1:
+                        BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, ref fDict, package);
                         edit.bill();
                         break;
                     case 2:
@@ -111,3 +116,4 @@ switch (userInput)
         System.Environment.Exit(0);
         break;
 }
+
