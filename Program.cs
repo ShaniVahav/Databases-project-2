@@ -80,8 +80,8 @@ switch (userInput)
             case 1:
                 Sale s = new Sale(DateTime.Now, price);
                 BusinessLogic.Logic.fillTableIN();
-                BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, ref fDict, package);
-                MySqlAccess.MySqlAccess.insertObject_Sale(s); //// ללא קישור בביסנס לוגיק 
+                MySqlAccess.MySqlAccess.insertObject_Sale(s);
+                BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, ref fDict, package); //// ללא קישור בביסנס לוגיק 
                 Console.WriteLine("The order price is " + price + " nis. Thank you!");
                 Console.WriteLine("1 - Check the bill");
                 Console.WriteLine("2 - New Order");
