@@ -8,12 +8,7 @@ namespace BusinessLogic
     public class Logic
     {
 
-        public static void createTables()
-        {
-            MySqlAccess.MySqlAccess.createTables();
-        }
-
-        public static void fillTableIN()
+          public static ArrayList fillTableIN()
         {
             ArrayList a = new ArrayList { "choclate" , "vanila" , "mecupelet",
                                   "Banana" ,
@@ -23,8 +18,15 @@ namespace BusinessLogic
                                   "coffee" ,
                                   "strawberry",
                                   "mango" };
-            MySqlAccess.MySqlAccess.insertToINGREDIENTS(ref a);
+            
+            return a;
         }
+
+        public static void createTables()
+        {
+            MySqlAccess.MySqlAccess.createTables();
+        }
+
         public static void fillTableOrder(ref ArrayList toppings, ref Dictionary<int, int> fdict, int package)
         {   
             iceCreamOrder a = new(package, fdict, toppings);
@@ -46,8 +48,8 @@ namespace BusinessLogic
 
                     Console.WriteLine("choose between 1-3 balls");
                     Console.WriteLine("0- forward with the order\n" +
-                                  "1 - choclate\n" +
-                                  "2 - vanila\n" +
+                                  "1 - chocolate\n" +
+                                  "2 - vanilla\n" +
                                   "3 - mecupelet\n" +
                                   "4 - Banana\n" +
                                   "5 - orange\n" +

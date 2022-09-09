@@ -30,7 +30,7 @@ for (int i = 0; i < 10; i++)
 
 Console.WriteLine("_____________________");
 Console.WriteLine("Please choose a task:");
-Console.WriteLine("1 - create empty tables");
+Console.WriteLine("1 - create tables");
 userInput = Int32.Parse(Console.ReadLine());
 
 
@@ -46,6 +46,15 @@ switch (userInput)
 {
     case 1:
     NEW_ORDER:
+
+    package = -1;
+    toppingsArraylist.Clear();
+    iceCreamBallsNumber = 0;                                    /// משתנה של כמות הכדורים   ///// פה אני יוצר את המילון 
+    for (int i = 0; i < 10; i++)
+    {
+        fDict[i] = 0;
+    }
+
         Console.WriteLine("Please choose a package:");
         Console.WriteLine("1 - regular cone");
         Console.WriteLine("2 - special cone");
@@ -65,7 +74,7 @@ switch (userInput)
                 break;
             case 3:
                 package = 3;
-                create_an_order.toppings_for_box(ref fDict, ref toppingsArraylist);
+               create_an_order.toppings_for_box(ref fDict, ref toppingsArraylist);
                 break;
         }
 
@@ -77,11 +86,63 @@ switch (userInput)
 
         switch (userInput)
         {
-            case 1:
+            case 1:  // chose to pay
                 Sale s = new Sale(DateTime.Now, price);
-                BusinessLogic.Logic.fillTableIN();
                 MySqlAccess.MySqlAccess.insertObject_Sale(s);
-                BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, ref fDict, package); //// ללא קישור בביסנס לוגיק 
+                BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, ref fDict, package);
+
+                // calculate the price:
+                   if (package == 1)
+                    {
+                        switch(iceCreamBallsNumber)
+                        {
+                            case 1:
+                                price = 7;
+                                break;
+                            case 2:
+                                price = 12;
+                                break;
+                            case 3:
+                                price = 18;
+                                break;
+                        }
+                    }
+
+                    if (package == 2)
+                    {
+                        switch(iceCreamBallsNumber)
+                        {
+                            case 1:
+                                price = 9;
+                                break;
+                            case 2:
+                                price = 14;
+                                break;
+                            case 3:
+                                price = 20;
+                                break;
+                        }
+                    }
+
+                    if (package == 3)
+                    {
+                        switch(iceCreamBallsNumber)
+                        {
+                            case 1:
+                                price = 12;
+                                break;
+                            case 2:
+                                price = 17;
+                                break;
+                            case 3:
+                                price = 23;
+                                break;
+                            DEFAULT:
+                                price = 23 + (iceCreamBallsNumber-3)*6;
+                        }
+                    }
+                price += toppingsArraylist.Count*2;
+                
                 Console.WriteLine("The order price is " + price + " nis. Thank you!");
                 Console.WriteLine("1 - Check the bill");
                 Console.WriteLine("2 - New Order");
@@ -118,4 +179,3 @@ switch (userInput)
         System.Environment.Exit(0);
         break;
 }
-

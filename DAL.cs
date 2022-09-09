@@ -13,7 +13,7 @@ namespace MySqlAccess
     class MySqlAccess
     {
 
-        static string connStr = "server=127.0.0.1;user=root;port=3306; password=Chrisbar1@";
+        static string connStr = "server=127.0.0.1;user=root;port=3306; password=Shani41128";
 
         /*
         this call will represent CRUD operation
@@ -40,7 +40,7 @@ namespace MySqlAccess
 
                 // ------- create INGREDIENTS ------- //
                  sql = "CREATE TABLE `Ice_Cream_Shop`.`INGREDIENTS` (" +
-                    "`id_INGREDIENT` INT NOT NULL," +
+                    "`id_INGREDIENT` INT NOT NULL AUTO_INCREMENT," +
                     "`item` VARCHAR(45) NOT NULL," +
                     "PRIMARY KEY (`id_INGREDIENT`));";
 
@@ -62,43 +62,16 @@ namespace MySqlAccess
                     "`id_ORDER` INT NOT NULL, " +
                     "`id_INGREDIENT` INT NOT NULL," +
                     "`amount` INT NOT NULL, " +
-                    "FOREIGN KEY (id_INGREDIENT) REFERENCES INGREDIENTS(id_INGREDIENT), " +
+                    // "FOREIGN KEY (id_INGREDIENT) REFERENCES INGREDIENTS(id_INGREDIENT), " +
                     "FOREIGN KEY(id_ORDER) REFERENCES SALES(id_SALE)," +
                     "PRIMARY KEY (id_ORDER, Id_INGREDIENT));";
 
                 cmd = new MySqlCommand(sql, conn);
                 cmd.ExecuteNonQuery();
 
-                // ------- create SALES ------- //
-      
-                // // create connection owner - vehicle
-                // sql = "CREATE TABLE `Garage`.`Vowns` (" +
-                //     "`idVown` INT NOT NULL AUTO_INCREMENT, " +
-                //     "`idOwner` INT NOT NULL," +
-                //     "`idVehicle` INT NOT NULL," +
-                //     "PRIMARY KEY (`idVown`),"+
-                //     "FOREIGN KEY (idVehicle) REFERENCES Vehicles(idVehicle)," +
-                //     "FOREIGN KEY (idOwner) REFERENCES Owners(idOwner));";
-
-                // cmd = new MySqlCommand(sql, conn);
-                // cmd.ExecuteNonQuery();
-
-                // // create connection task - vehicle
-                // sql = "CREATE TABLE `Garage`.`Orders` (" +
-                //     "`idOrder` INT NOT NULL AUTO_INCREMENT," +
-                //     "`idVehicle` INT NOT NULL," +
-                //     "`idTask` INT NOT NULL," +
-                //     "`OrderDate` DATETIME DEFAULT NOW()," +
-                //     "`CompleteDate` DATETIME," +
-                //     "`Completed` INT NOT NULL DEFAULT 0," +
-                //     "`Payed` INT NOT NULL DEFAULT 0," +
-                //     "PRIMARY KEY (`idOrder`)," +
-                //     "FOREIGN KEY (idVehicle) REFERENCES Vehicles(idVehicle)," +
-                //     "FOREIGN KEY (idTask) REFERENCES Tasks(idTask));";
-
-                // cmd = new MySqlCommand(sql, conn);
-                // cmd.ExecuteNonQuery();   
-
+                ArrayList a = Logic.fillTableIN();
+                insertObject_ingredients(a);
+               
                 conn.Close();
 
             }
@@ -108,39 +81,23 @@ namespace MySqlAccess
             }
         }
 
-        public static void insertToINGREDIENTS(ref ArrayList a)
-        {
-            try
-            {
-                MySqlConnection conn = new MySqlConnection(connStr);
-                Console.WriteLine("Connecting to MySQL...");
-                conn.Open();
-                string sql = null;
-                foreach (var item in a)
-                {
-                    sql = "INSERT INTO ice_cream_shop.INGREDIENTS(item) VALUES (" + item + ");";
-                }
-            }
-            catch (Exception ex)
-            {
-                
-                Console.WriteLine(ex.ToString());
-            }
-        }
+       
         public static void insertObjectToOrders(iceCreamOrder a)
         {
             try
             {
-                MySqlConnection conn = new MySqlConnection(connStr);
-                Console.WriteLine("Connecting to MySQL...");
-                conn.Open();
-
                 string sql = null;
-                int id = getId();
-
-                Console.WriteLine("the value of id is"+id); //debug
-                foreach (var item in a.fdict)
+                foreach(var item in a.fdict)
                 {
+                    MySqlConnection conn = new MySqlConnection(connStr);
+                    Console.WriteLine("Connecting to MySQL...");
+                    conn.Open();
+
+                    
+                    int id = getId();
+
+                    // Console.WriteLine("the value of id is"+id); //debug
+                
                     //  SELECT id_order FROM ice_cream_shop.ORDERS ORDER BY id_order DESC LIMIT 1";
                     sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,id_INGREDIENT,amount)" +
                     "VALUES(" + id + "," + item.Key + "," + item.Value + ");";
@@ -149,6 +106,7 @@ namespace MySqlAccess
                     conn.Close();
                 }
             }
+
             catch (Exception ex)
             {
                 
@@ -156,6 +114,34 @@ namespace MySqlAccess
                     Console.WriteLine(ex.ToString());
             }
         }
+
+        public static void insertObject_ingredients(ArrayList ingredient_arr)
+        {
+            try
+            {
+                string sql = null;
+                foreach(string ingredient in ingredient_arr)
+                {
+                    MySqlConnection conn = new MySqlConnection(connStr);
+                    Console.WriteLine("Connecting to MySQL...");
+                    conn.Open();
+                
+                    //string str = ingredient;
+                    sql = "INSERT INTO `ice_cream_shop`.`Ingredients` (`item`) " +
+                    "VALUES ('" + ingredient + "');";
+                
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
         public static void insertObject_Sale(Sale s)
         {
             try
@@ -231,8 +217,11 @@ namespace MySqlAccess
                 rdr.GetValues(numb);
                 ans = (int)numb[0];
             }
+            conn.Close();
+            rdr.Close();
             return ans;
         }
+
     }
 
 }
