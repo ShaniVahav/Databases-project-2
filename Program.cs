@@ -33,6 +33,7 @@ Console.WriteLine("Please choose a task:");
 Console.WriteLine("1 - create empty tables");
 userInput = Int32.Parse(Console.ReadLine());
 
+
 if (userInput == 1)
     Logic.createTables();
 
@@ -78,7 +79,9 @@ switch (userInput)
         {
             case 1:
                 Sale s = new Sale(DateTime.Now, price);
-                MySqlAccess.MySqlAccess.insertObject_Sale(s);
+                BusinessLogic.Logic.fillTableIN();
+                BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, ref fDict, package);
+                MySqlAccess.MySqlAccess.insertObject_Sale(s); //// ללא קישור בביסנס לוגיק 
                 Console.WriteLine("The order price is " + price + " nis. Thank you!");
                 Console.WriteLine("1 - Check the bill");
                 Console.WriteLine("2 - New Order");
@@ -87,7 +90,6 @@ switch (userInput)
                 switch (userInput)
                 {
                     case 1:
-                        BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, ref fDict, package);
                         edit.bill();
                         break;
                     case 2:

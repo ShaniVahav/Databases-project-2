@@ -13,6 +13,18 @@ namespace BusinessLogic
             MySqlAccess.MySqlAccess.createTables();
         }
 
+        public static void fillTableIN()
+        {
+            ArrayList a = new ArrayList { "choclate" , "vanila" , "mecupelet",
+                                  "Banana" ,
+                                   "orange",
+                                  "coconut" ,
+                                  "Oreo" ,
+                                  "coffee" ,
+                                  "strawberry",
+                                  "mango" };
+            MySqlAccess.MySqlAccess.insertToINGREDIENTS(ref a);
+        }
         public static void fillTableOrder(ref ArrayList toppings, ref Dictionary<int, int> fdict, int package)
         {   
             iceCreamOrder a = new(package, fdict, toppings);

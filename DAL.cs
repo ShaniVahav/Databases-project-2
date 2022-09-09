@@ -6,6 +6,7 @@ using BusinessLogic;
 using System.Collections;
 using System.Windows.Markup;
 using System.Reflection.PortableExecutable;
+using System.Collections.Generic;
 
 namespace MySqlAccess
 {
@@ -47,26 +48,29 @@ namespace MySqlAccess
                 cmd.ExecuteNonQuery();
 
                 // ------- create ORDERS ------- //
+
+                sql = "CREATE TABLE `Ice_Cream_Shop`.`SALES` (" +
+                  "`id_SALE` INT NOT NULL AUTO_INCREMENT, " +
+                  "`date` varchar(45) NOT NULL," +
+                  "`price` INT NOT NULL," +
+                  "PRIMARY KEY (`id_SALE`));";
+
+                cmd = new MySqlCommand(sql, conn);
+                cmd.ExecuteNonQuery();
+
                 sql = "CREATE TABLE `Ice_Cream_Shop`.`ORDERS` (" +
                     "`id_ORDER` INT NOT NULL, " +
                     "`id_INGREDIENT` INT NOT NULL," +
                     "`amount` INT NOT NULL, " +
                     "FOREIGN KEY (id_INGREDIENT) REFERENCES INGREDIENTS(id_INGREDIENT), " +
+                    "FOREIGN KEY(id_ORDER) REFERENCES SALES(id_SALE)," +
                     "PRIMARY KEY (id_ORDER, Id_INGREDIENT));";
 
                 cmd = new MySqlCommand(sql, conn);
                 cmd.ExecuteNonQuery();
 
                 // ------- create SALES ------- //
-                sql = "CREATE TABLE `Ice_Cream_Shop`.`SALES` (" +
-                    "`id_SALE` INT NOT NULL AUTO_INCREMENT, " +
-                    "`date` varchar(45) NOT NULL," +
-                    "`price` INT NOT NULL," +
-                    "PRIMARY KEY (`id_SALE`));";
-
-                cmd = new MySqlCommand(sql, conn);
-                cmd.ExecuteNonQuery();
-
+      
                 // // create connection owner - vehicle
                 // sql = "CREATE TABLE `Garage`.`Vowns` (" +
                 //     "`idVown` INT NOT NULL AUTO_INCREMENT, " +
@@ -104,6 +108,25 @@ namespace MySqlAccess
             }
         }
 
+        public static void insertToINGREDIENTS(ref ArrayList a)
+        {
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                string sql = null;
+                foreach (var item in a)
+                {
+                    sql = "INSERT INTO ice_cream_shop.INGREDIENTS(item) VALUES (" + item + ");";
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                Console.WriteLine(ex.ToString());
+            }
+        }
         public static void insertObjectToOrders(iceCreamOrder a)
         {
             try
@@ -115,51 +138,12 @@ namespace MySqlAccess
                 string sql = null;
                 int id = getId();
 
-                Console.WriteLine("the value of id is"+id);
+                Console.WriteLine("the value of id is"+id); //debug
                 foreach (var item in a.fdict)
                 {
                     //  SELECT id_order FROM ice_cream_shop.ORDERS ORDER BY id_order DESC LIMIT 1";
                     sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,id_INGREDIENT,amount)" +
                     "VALUES(" + id + "," + item.Key + "," + item.Value + ");";
-                    /*
-
-                    if (obj is)
-                    {
-                        Owner owner = (Owner)obj;
-                        sql = "INSERT INTO `Garage`.`Owners` (`Name`, `Phone`, `Address`) " +
-                        "VALUES ('" + owner.getName() + "', '" + owner.getPhone() + "', '" + owner.getAddress() + "');";
-                    }
-
-                    if (obj is Vehicle)
-                    {
-                        Vehicle vehicle = (Vehicle)obj;
-                        sql = "INSERT INTO `Garage`.`Vehicles` (`Manufacturer`, `Color`, `Year`) " +
-                        "VALUES ('" + vehicle.getManufacturer() + "', '" + vehicle.getColor() + "', '" + vehicle.getYear() + "');";
-                    }
-
-                    if (obj is VTask)
-                    {
-                        VTask task = (VTask)obj;
-                        sql = "INSERT INTO `Garage`.`Tasks` (`Name`, `Description`, `Price`) " +
-                        "VALUES ('" + task.getName() + "', '" + task.getDescription() + "', '" + task.getPrice() + "');";
-                    }
-
-                    if (obj is VOwn)
-                    {
-                        VOwn vown = (VOwn)obj;
-                        sql = "INSERT INTO `Garage`.`Vowns` (`idOwner`, `idVehicle`) " +
-                        "VALUES ('" + vown.getIdOwner() + "', '" + vown.getIdVehicle() + "');";
-                    }
-
-                    if (obj is Order)
-                    {
-                        Order order = (Order)obj;
-                        sql = "INSERT INTO `Garage`.`Orders` (`idVehicle`, `idTask`, `OrderDate`, `CompleteDate`, `Completed`, `Payed`) " +
-                        "VALUES ('" + order.getIdVehicle() + "', '" + order.getIdTask()+ "', '" +
-                         order.getOrderDate() + "', '" + order.getCompleteDate() + "', '" + order.getCompleted()+ "', '" + order.getPayed() + "');";
-                    }
-                    */
-
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
@@ -167,7 +151,9 @@ namespace MySqlAccess
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                
+                    Console.WriteLine("insert objcet func");
+                    Console.WriteLine(ex.ToString());
             }
         }
         public static void insertObject_Sale(Sale s)

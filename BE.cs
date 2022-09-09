@@ -4,6 +4,7 @@ namespace BusinessEntities
 {
 
     // data holder classes (theoreticaly may be a struct ?)
+    
     class iceCreamOrder
     {
         public int  package;
