@@ -7,7 +7,6 @@ namespace BusinessLogic
 {
     public class Logic
     {
-
           public static ArrayList fillTableIN()
         {
             ArrayList a = new ArrayList { "choclate" , "vanila" , "mecupelet",
@@ -27,7 +26,7 @@ namespace BusinessLogic
             MySqlAccess.MySqlAccess.createTables();
         }
 
-        public static void fillTableOrder(ref ArrayList toppings, ref Dictionary<int, int> fdict, int package)
+        public static void fillTableOrder(ref ArrayList toppings, int round_number, ref Dictionary<int, int> fdict, int package)
         {   
             iceCreamOrder a = new(package, fdict, toppings);
             MySqlAccess.MySqlAccess.insertObjectToOrders(a);

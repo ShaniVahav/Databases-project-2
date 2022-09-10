@@ -13,6 +13,31 @@ namespace MySqlAccess
     class MySqlAccess
     {
 
+          public static void update_price(int price)
+        {
+             try
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+
+                string sql = "UPDATE ice_cream_shop.sales " +
+                "SET price = " + price +
+                " WHERE id_SALE = " + getId() + ";";
+
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+
+            catch (Exception ex)
+            {
+                
+                    Console.WriteLine("insert objcet func");
+                    Console.WriteLine(ex.ToString());
+            }
+        }
+
         static string connStr = "server=127.0.0.1;user=root;port=3306; password=Shani41128";
 
         /*
