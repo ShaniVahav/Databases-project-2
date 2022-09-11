@@ -119,7 +119,7 @@ namespace MySqlAccess
                  conn.Open();
                  sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount) " +
                  "VALUES(" + id + "," + round_number + "," +a.Package + "," + "1" + ");";
-                 MySqlCommand cmd = new MySqlCommand(sql, conn);
+                 cmd = new MySqlCommand(sql, conn);
                  cmd.ExecuteNonQuery();
                  conn.Close();
 
@@ -134,7 +134,7 @@ namespace MySqlAccess
                     //  SELECT id_order FROM ice_cream_shop.ORDERS ORDER BY id_order DESC LIMIT 1";
                     sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount)" +
                     "VALUES(" + id + "," + round_number + "," +item.Key + "," + item.Value + ");";
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd = new MySqlCommand(sql, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -144,7 +144,7 @@ namespace MySqlAccess
                     conn.Open();
                     sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount)"+
                          "VALUES(" + id + "," + round_number + "," +item + "," + "1" + ");";
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd = new MySqlCommand(sql, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
