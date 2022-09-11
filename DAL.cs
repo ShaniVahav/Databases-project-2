@@ -38,7 +38,7 @@ namespace MySqlAccess
             }
         }
 
-        static string connStr = "server=127.0.0.1;user=root;port=3306; password=Shani41128";
+        static string connStr = "server=127.0.0.1;user=root;port=3306; password=Chrisbar1@";
 
         /*
         this call will represent CRUD operation
@@ -103,7 +103,7 @@ namespace MySqlAccess
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+               
             }
         }
 
@@ -134,35 +134,32 @@ namespace MySqlAccess
                 conn.Open();
                 
                 int id = getId();
-
+                ///////////////////// insert cone 
                 sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount) " +
                 "VALUES(" + id + "," + round_number + "," +a.Package + "," + "1" + ");";
 
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.ExecuteNonQuery();
                 conn.Close();
-
+                ////////////////// insert flavours 
                 foreach(var item in a.fdict)
                 {
+                    if(item.Value == 0 )
+                        continue;
                     conn = new MySqlConnection(connStr);
                     Console.WriteLine("Connecting to MySQL...");
                     conn.Open();
 
-
                     id = getId();
-
-                    //  SELECT id_order FROM ice_cream_shop.ORDERS ORDER BY id_order DESC LIMIT 1";
                     sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount)" +
                     "VALUES(" + id + "," + round_number + "," +item.Key + "," + item.Value + ");";
-
-                   // cmd = new MySqlCommand(sql, conn);
 
                     cmd = new MySqlCommand(sql, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
-
-                  foreach(string item in a.toppings)
+                  //////////////////// insert topiings 
+                  foreach( var item in a.toppings)
                 {
 
                     conn = new MySqlConnection(connStr);

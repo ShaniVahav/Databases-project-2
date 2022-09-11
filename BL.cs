@@ -5,6 +5,7 @@ using BusinessEntities;
 
 namespace BusinessLogic
 {
+  
     public class Logic
     {
           public static ArrayList fillTableIN()
@@ -68,40 +69,48 @@ namespace BusinessLogic
 
             public static void toppings_for_regular(ref Dictionary<int, int> fDict, ref int number, ref ArrayList toppingsArraylist)
             {
-            ArrayList toppings = new ArrayList { "peanuts", "chocolate", "maple" };
+            Dictionary<string , int> Tdict= new Dictionary<string, int>(); 
+           Tdict.Add("chocolate",14);
+           Tdict.Add("peanuts",15);
+           Tdict.Add("maple",16);
                 if (number < 2)
                     return;
-            removeToppings(ref fDict, ref toppings, ref toppingsArraylist);
+            removeToppings(ref fDict, ref Tdict, ref toppingsArraylist);
         }
-        public static void removeToppings(ref Dictionary<int, int> fDict, ref ArrayList toppings, ref ArrayList toppingsArraylist)
+        public static void removeToppings(ref Dictionary<int, int> fDict, ref Dictionary<string,int> Tdict,ref ArrayList toppingsArraylist)
         {
             if (fDict[3] > 0 || fDict[1] > 0)
-                toppings.Remove("chocolate");
+                Tdict.Remove("chocolate");
             if (fDict[2] > 0)
-                toppings.Remove("maple");
-            foreach (var item in toppings)
-            {
-                addingCheak((string)item, ref toppingsArraylist);
+                Tdict.Remove("maple");
+            foreach (var item in Tdict) { 
+                string key = item.Key;
+                int value = item.Value;
+                addingCheak(key,value, ref toppingsArraylist);
             }
         }
-    public static void addingCheak(string topping, ref ArrayList toppingsArraylist)
+    public static void addingCheak(string key , int value , ref ArrayList toppingsArraylist)
             {
-                Console.WriteLine("press 1 - to add " + topping + ", 0 otherwise");
+                Console.WriteLine("press 1 - to add " + key + ", 0 otherwise");
                 int userInput = Int32.Parse(Console.ReadLine());
                 if (userInput == 1)
-                    toppingsArraylist.Add(topping);
-            }
-
+                    toppingsArraylist.Add(value);
+                Console.WriteLine(toppingsArraylist.ToString());
+            } 
+             
+            
         public static void toppings_for_special(ref Dictionary<int, int> fDict, ref ArrayList toppingsArraylist)
         {
-            ArrayList toppings = new ArrayList { "peanuts", "chocolate", "maple" };
-            removeToppings(ref fDict, ref toppings, ref toppingsArraylist);
+             Dictionary<string , int> Tdict= new Dictionary<string, int>(); 
+            Tdict.Add("chocolate",14);
+           Tdict.Add("peanuts",15);
+           Tdict.Add("maple",16);
+            removeToppings(ref fDict, ref Tdict, ref toppingsArraylist);
         }
             public static void toppings_for_box(ref Dictionary<int, int> fDict, ref ArrayList toppingsArraylist)
             {
-                ArrayList toppings = new ArrayList { "peanuts", "chocolate", "maple" };
-                removeToppings(ref fDict, ref toppings, ref toppingsArraylist);
-        }
+                toppings_for_special(ref fDict, ref toppingsArraylist);
+            }
 
         }
 

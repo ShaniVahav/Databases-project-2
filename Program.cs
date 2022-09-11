@@ -18,17 +18,16 @@ Stopwatch stopwatch = new Stopwatch();
 
 int userInput = 0;
 int price = 0;
-int round_number = 0;
+int round_number = 1;
 
 int package = -1;
 var toppingsArraylist = new ArrayList();
 int iceCreamBallsNumber = 0;                                    /// משתנה של כמות הכדורים 
 var fDict = new Dictionary<int, int>();  ///// פה אני יוצר את המילון 
-for (int i = 0; i < 10; i++)
+for (int i = 1; i < 11; i++)
 {
     fDict.Add(i, 0);
 }
-
 Console.WriteLine("1 - create tables");
 userInput = Int32.Parse(Console.ReadLine());
 
@@ -64,11 +63,13 @@ ANOTHER_ORDER:
 round_number++;
 package = -1;
 toppingsArraylist.Clear();
-iceCreamBallsNumber = 0;                                    /// משתנה של כמות הכדורים   ///// פה אני יוצר את המילון 
-for (int i = 0; i < 10; i++)
+iceCreamBallsNumber = 0; 
+/// משתנה של כמות הכדורים   ///// פה אני יוצר את המילון 
+for (int i = 1; i < 11; i++)
 {
     fDict[i] = 0;
 }
+
 
     Console.WriteLine("Please choose a package:");
     Console.WriteLine("1 - regular cone");
@@ -80,21 +81,21 @@ for (int i = 0; i < 10; i++)
     switch (userInput)
     {
         case 1:
-            package = 1;
+            package = 11;
             create_an_order.toppings_for_regular(ref fDict, ref iceCreamBallsNumber, ref toppingsArraylist);
             break;
         case 2:
-            package = 2;
+            package = 12;
             create_an_order.toppings_for_special(ref fDict, ref toppingsArraylist);
             break;
         case 3:
-            package = 3;
+            package = 13;
             create_an_order.toppings_for_box(ref fDict, ref toppingsArraylist);
             break;
     }
 
 // calculate the price:
-if (package == 1)
+if (package == 11)
 {
     switch(iceCreamBallsNumber)
     {
@@ -110,7 +111,7 @@ if (package == 1)
     }
 }
 
-if (package == 2)
+if (package == 12)
 {
     switch(iceCreamBallsNumber)
     {
@@ -126,7 +127,7 @@ if (package == 2)
     }
 }
 
-if (package == 3)
+if (package == 13)
 {
     switch(iceCreamBallsNumber)
     {
