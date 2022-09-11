@@ -85,11 +85,12 @@ namespace MySqlAccess
 
                 sql = "CREATE TABLE `Ice_Cream_Shop`.`ORDERS` (" +
                     "`id_ORDER` INT NOT NULL, " +
+                    " `ROUND_NUMBER` INT NOT NULL,"+
                     "`id_INGREDIENT` INT NOT NULL," +
-                    "`amount` INT NOT NULL, " +
+                    "`amount` INT NOT NULL," +
                     // "FOREIGN KEY (id_INGREDIENT) REFERENCES INGREDIENTS(id_INGREDIENT), " +
                     "FOREIGN KEY(id_ORDER) REFERENCES SALES(id_SALE)," +
-                    "PRIMARY KEY (id_ORDER, Id_INGREDIENT));";
+                    "PRIMARY KEY (id_ORDER,ROUND_NUMBER,id_INGREDIENT));";
 
                 cmd = new MySqlCommand(sql, conn);
                 cmd.ExecuteNonQuery();
@@ -107,36 +108,85 @@ namespace MySqlAccess
         }
 
        
-        public static void insertObjectToOrders(iceCreamOrder a)
+        public static void insertObjectToOrders(iceCreamOrder a, int round_number)
         {
             try
             {
+
+                ///////
+                // MySqlConnection conn = new MySqlConnection(connStr);
+                // Console.WriteLine("Connecting to MySQL...");
+                // conn.Open();
+            
+                // //string str = ingredient;
+                // sql = "INSERT INTO `ice_cream_shop`.`Ingredients` (`item`) " +
+                // "VALUES ('" + ingredient + "');";
+            
+                // MySqlCommand cmd = new MySqlCommand(sql, conn);
+                // cmd.ExecuteNonQuery();
+                // conn.Close();
+                // /////////
+
                 string sql = null;
+
+                MySqlConnection conn = new MySqlConnection(connStr);
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                
+                int id = getId();
+
+                sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount) " +
+                "VALUES(" + id + "," + round_number + "," +a.Package + "," + "1" + ");";
+
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+
                 foreach(var item in a.fdict)
                 {
-                    MySqlConnection conn = new MySqlConnection(connStr);
+                    conn = new MySqlConnection(connStr);
                     Console.WriteLine("Connecting to MySQL...");
                     conn.Open();
 
-                    
-                    int id = getId();
 
-                    // Console.WriteLine("the value of id is"+id); //debug
-                
+                    id = getId();
+
                     //  SELECT id_order FROM ice_cream_shop.ORDERS ORDER BY id_order DESC LIMIT 1";
-                    sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,id_INGREDIENT,amount)" +
-                    "VALUES(" + id + "," + item.Key + "," + item.Value + ");";
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount)" +
+                    "VALUES(" + id + "," + round_number + "," +item.Key + "," + item.Value + ");";
+
+                   // cmd = new MySqlCommand(sql, conn);
+
+                    cmd = new MySqlCommand(sql, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+
+                  foreach(string item in a.toppings)
+                {
+
+                    conn = new MySqlConnection(connStr);
+                    Console.WriteLine("Connecting to MySQL...");
+                    conn.Open();
+
+                   
+                    sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount)"+
+                         "VALUES(" + id + "," + round_number + "," +item + "," + "1" + ");";
+
+                    cmd = new MySqlCommand(sql, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
             }
 
-            catch (Exception ex)
+                catch (Exception ex)
             {
-                
-                    Console.WriteLine("insert objcet func");
-                    Console.WriteLine(ex.ToString());
+                {
+                    
+                        Console.WriteLine("insert objcet func");
+                        Console.WriteLine(ex.ToString());
+                }
+
             }
         }
 

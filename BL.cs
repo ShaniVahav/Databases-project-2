@@ -29,7 +29,7 @@ namespace BusinessLogic
         public static void fillTableOrder(ref ArrayList toppings, int round_number, ref Dictionary<int, int> fdict, int package)
         {   
             iceCreamOrder a = new(package, fdict, toppings);
-            MySqlAccess.MySqlAccess.insertObjectToOrders(a);
+            MySqlAccess.MySqlAccess.insertObjectToOrders(a, round_number);
         }
     }
 
