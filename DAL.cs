@@ -13,7 +13,10 @@ namespace MySqlAccess
     class MySqlAccess
     {
 
-          public static void update_price(int price)
+        static string connStr = "server=127.0.0.1;user=root;port=3306; password=Chrisbar1@";
+
+
+        public static void update_price(int price)
         {
              try
             {
@@ -37,9 +40,6 @@ namespace MySqlAccess
                     Console.WriteLine(ex.ToString());
             }
         }
-
-        static string connStr = "server=127.0.0.1;user=root;port=3306; password=Shani41128";
-
         /*
         this call will represent CRUD operation
         CRUD stands for Create,Read,Update,Delete
@@ -85,12 +85,13 @@ namespace MySqlAccess
 
                 sql = "CREATE TABLE `Ice_Cream_Shop`.`ORDERS` (" +
                     "`id_ORDER` INT NOT NULL, " +
+                    " `ROUND_NUMBER` INT NOT NULL,"+
                     "`id_INGREDIENT` INT NOT NULL," +
-                    "`amount` INT NOT NULL, " +
+                    "`amount` INT NOT NULL," +
                     // "FOREIGN KEY (id_INGREDIENT) REFERENCES INGREDIENTS(id_INGREDIENT), " +
                     "FOREIGN KEY(id_ORDER) REFERENCES SALES(id_SALE)," +
-                    "PRIMARY KEY (id_ORDER, Id_INGREDIENT));";
-
+                    "PRIMARY KEY (id_ORDER,ROUND_NUMBER,id_INGREDIENT));";
+                
                 cmd = new MySqlCommand(sql, conn);
                 cmd.ExecuteNonQuery();
 
@@ -107,25 +108,42 @@ namespace MySqlAccess
         }
 
        
-        public static void insertObjectToOrders(iceCreamOrder a)
+        public static void insertObjectToOrders(iceCreamOrder a,int round_number)
         {
             try
             {
                 string sql = null;
+                int id = getId();
+                 MySqlConnection conn = new MySqlConnection(connStr);
+                 Console.WriteLine("Connecting to MySQL...");
+                 conn.Open();
+                 sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount) " +
+                 "VALUES(" + id + "," + round_number + "," +a.Package + "," + "1" + ");";
+                 MySqlCommand cmd = new MySqlCommand(sql, conn);
+                 cmd.ExecuteNonQuery();
+                 conn.Close();
+
                 foreach(var item in a.fdict)
                 {
-                    MySqlConnection conn = new MySqlConnection(connStr);
                     Console.WriteLine("Connecting to MySQL...");
                     conn.Open();
 
-                    
-                    int id = getId();
 
                     // Console.WriteLine("the value of id is"+id); //debug
                 
                     //  SELECT id_order FROM ice_cream_shop.ORDERS ORDER BY id_order DESC LIMIT 1";
-                    sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,id_INGREDIENT,amount)" +
-                    "VALUES(" + id + "," + item.Key + "," + item.Value + ");";
+                    sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount)" +
+                    "VALUES(" + id + "," + round_number + "," +item.Key + "," + item.Value + ");";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+                  foreach(string item in a.toppings)
+                {
+                    Console.WriteLine("Connecting to MySQL...");
+                    conn.Open();
+                    sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount)"+
+                         "VALUES(" + id + "," + round_number + "," +item + "," + "1" + ");";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
