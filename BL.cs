@@ -113,9 +113,11 @@ namespace BusinessLogic
                 Console.WriteLine("The order canceled.");
             }
         
-            public static void bill()
+            public static void bill(DateTime date, int price)
             {
-                Console.WriteLine("bill");
+                Console.WriteLine("Date: " + date);
+                Console.WriteLine("Price: " + price + " nis");
+                Console.WriteLine("Thank you! Hope to see you next time");
             }
         }
 }

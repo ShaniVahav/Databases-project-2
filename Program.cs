@@ -55,7 +55,8 @@ if (userInput == 2)
 
 
 // create a sale
-Sale s = new Sale(DateTime.Now, price);
+DateTime date = DateTime.Now;
+Sale s = new Sale(date, price);
 MySqlAccess.MySqlAccess.insertObject_Sale(s);
 
     
@@ -158,16 +159,18 @@ userInput = Int32.Parse(Console.ReadLine());
             
             // update the price
             MySqlAccess.MySqlAccess.update_price(price);
-            Console.WriteLine("The order price is " + price + " nis. Thank you!");
+
             Console.WriteLine("Please choose a task:");
             Console.WriteLine("1 - Check the bill");
             Console.WriteLine("2 - New Order");
             Console.WriteLine("3 - exit");
             userInput = Int32.Parse(Console.ReadLine());
+
             switch (userInput)
             {
                 case 1:
-                    edit.bill();
+                    edit.bill(date, price);
+                    goto NEW_ORDER;
                     break;
                 case 2:
                     goto NEW_ORDER;
