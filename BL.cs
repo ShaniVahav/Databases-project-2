@@ -8,6 +8,7 @@ namespace BusinessLogic
   
     public class Logic
     {
+
           public static ArrayList fillTableIN()
         {
             ArrayList a = new ArrayList { "choclate" , "vanila" , "mecupelet",
@@ -119,7 +120,9 @@ namespace BusinessLogic
         {
             public static void delete()
             {
-                Console.WriteLine("The order canceled.");
+                int id = MySqlAccess.MySqlAccess.getId();
+                Console.WriteLine(" The id is "+ id);
+                MySqlAccess.MySqlAccess.deleteOrderFromDB(id);
             }
         
             public static void bill(DateTime date, int price)

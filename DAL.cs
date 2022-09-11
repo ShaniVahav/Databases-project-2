@@ -12,6 +12,35 @@ namespace MySqlAccess
 {
     class MySqlAccess
     {
+          static string connStr = "server=127.0.0.1;user=root;port=3306; password=Chrisbar1@";
+
+         public static void deleteOrderFromDB(int id)
+        {
+               try
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                string sql = "DELETE FROM ice_cream_shop.sales WHERE sale_id="    +id+   ";";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                conn.Close();
+
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                sql = "DELETE FROM ice_cream_shop.orders WHERE id_ORDER="      +id+    ";";
+                cmd = new MySqlCommand(sql, conn);
+                cmd.ExecuteNonQuery();;
+                conn.Close();
+             }  
+                   catch (Exception ex)
+            {
+                
+                    Console.WriteLine(ex.ToString());
+            }
+        }
+            
+
+
 
           public static void update_price(int price)
         {
@@ -37,8 +66,6 @@ namespace MySqlAccess
                     Console.WriteLine(ex.ToString());
             }
         }
-
-        static string connStr = "server=127.0.0.1;user=root;port=3306; password=Chrisbar1@";
 
         /*
         this call will represent CRUD operation
@@ -157,8 +184,8 @@ namespace MySqlAccess
                     cmd = new MySqlCommand(sql, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
-                }
-                  //////////////////// insert topiings 
+                }                                                                   
+                  //////////////////// insert topiings           
                   foreach( var item in a.toppings)
                 {
 

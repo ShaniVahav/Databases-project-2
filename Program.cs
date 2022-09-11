@@ -9,6 +9,7 @@ using MySqlAccess;
 using BusinessLogic;
 using System.Collections;
 using BusinessEntities;
+using System.Reflection.PortableExecutable;
 
 // See https://aka.ms/new-console-template for more information
 
@@ -64,7 +65,7 @@ round_number++;
 package = -1;
 toppingsArraylist.Clear();
 iceCreamBallsNumber = 0; 
-/// משתנה של כמות הכדורים   ///// פה אני יוצר את המילון 
+
 for (int i = 1; i < 11; i++)
 {
     fDict[i] = 0;
@@ -93,6 +94,19 @@ for (int i = 1; i < 11; i++)
             create_an_order.toppings_for_box(ref fDict, ref toppingsArraylist);
             break;
     }
+/// insert the round of the order to data base 
+BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, round_number, ref fDict, package);
+
+Console.WriteLine("Please choose an option: \n");
+Console.WriteLine("1 - coninue with the order");
+Console.WriteLine("9 - edit the order(start the order from scratch!");
+userInput = Int32.Parse(Console.ReadLine());
+if(userInput == 9  )
+    goto NEW_ORDER;
+
+/// insert the round of the order to data base 
+BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, round_number, ref fDict, package);
+
 
 // calculate the price:
 if (package == 11)
@@ -148,17 +162,14 @@ price += toppingsArraylist.Count*2;
 
 Console.WriteLine("Please choose a task:");
 Console.WriteLine("1 - Pay (After payment, the order cannot be canceled)");
-Console.WriteLine("2 - Edit the order");
-Console.WriteLine("3 - Delete");
-Console.WriteLine("4 - Add another order");
+Console.WriteLine("2 - Delete");
+Console.WriteLine("3 - Add another order");
 userInput = Int32.Parse(Console.ReadLine());
 
     switch (userInput)
     {
-        case 1:  // chose to pay
-            BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, round_number, ref fDict, package);
-            
-            // update the price
+        case 1:  // chose to pay            
+            // update the price in data base 
             MySqlAccess.MySqlAccess.update_price(price);
 
             Console.WriteLine("Please choose a task:");
@@ -184,17 +195,12 @@ userInput = Int32.Parse(Console.ReadLine());
             break;
 
         case 2:
-            edit.delete();
-            goto NEW_ORDER;
-            break;
-
-        case 3:
-            edit.delete();
+            BusinessLogic.edit.delete();
             Console.WriteLine("Thank you for your time");
             goto NEW_ORDER;
             break;
 
-        case 4:
+        case 3:
             goto ANOTHER_ORDER;
             break;
     }
