@@ -80,7 +80,7 @@ if (userInput == 3)
                     goto NEW_ORDER;
 }
 
-
+EDIT:
 // create a sale
 DateTime date = DateTime.Now;
 Sale s = new Sale(date, price);
@@ -105,7 +105,7 @@ for (int i = 1; i < 11; i++)
     Console.WriteLine("2 - special cone");
     Console.WriteLine("3 - box");
     userInput = Int32.Parse(Console.ReadLine());
-    create_an_order.flavours(ref fDict, ref iceCreamBallsNumber);
+    create_an_order.flavours(ref fDict, ref iceCreamBallsNumber, userInput);
 
     switch (userInput)
     {
@@ -130,7 +130,7 @@ Console.WriteLine("2 - Yes");
 userInput = Int32.Parse(Console.ReadLine());
 if(userInput == 2  )
 {
-    goto NEW_ORDER;
+    goto EDIT;
 }
 
 /// insert the round of the order to data base 
