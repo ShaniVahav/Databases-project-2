@@ -168,6 +168,7 @@ Console.WriteLine("Please choose a task:");
 Console.WriteLine("1 - Pay (After payment, the order cannot be canceled)");
 Console.WriteLine("2 - Delete");
 Console.WriteLine("3 - Add another order");
+Console.WriteLine("4 - Get most commom ingredient");
 userInput = Int32.Parse(Console.ReadLine());
 
     switch (userInput)
@@ -208,7 +209,7 @@ userInput = Int32.Parse(Console.ReadLine());
 
                     if(userInput == 2)
                     {
-                        Console.WriteLine("You chose incomplete sales");
+                      MySqlAccess.MySqlAccess.get_incompleteSales();
                     }
                     goto NEW_ORDER;
                     break;
@@ -225,4 +226,7 @@ userInput = Int32.Parse(Console.ReadLine());
         case 3:
             goto ANOTHER_ORDER;
             break;
+         case 4 :
+         MySqlAccess.MySqlAccess.createA();
+        break;
     }

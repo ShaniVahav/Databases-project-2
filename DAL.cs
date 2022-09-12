@@ -12,8 +12,30 @@ namespace MySqlAccess
 {
     class MySqlAccess
     {
-          static string connStr = "server=127.0.0.1;user=root;port=3306; password=Shani41128";
+          static string connStr = "server=127.0.0.1;user=root;port=3306; password=Chrisbar1@";
 
+        // inspiration from https://www.youtube.com/watch?v=Die4mKMQ1_8
+        public static void get_incompleteSales()
+        {
+            using (MySqlConnection conn = new MySqlConnection(connStr))
+            {
+                conn.Open();
+
+                using(var cmd = new MySqlCommand("SELECT id_SALE, date FROM ice_cream_shop.sales WHERE price = 0", conn))
+                {
+                    using(var reader = cmd.ExecuteReader())
+                    {
+                        while(reader.Read())  // read row by row
+                        {
+                            var id = reader.GetString(0);
+                            var date = reader.GetString(1);
+
+                            Console.WriteLine($"ID sale: {id}, date: {date}");
+                        }
+                    }
+                }
+            }
+        }
          public static void deleteOrderFromDB(int id)
         {
                try
@@ -171,7 +193,7 @@ namespace MySqlAccess
                 ////////////////// insert flavours 
                 foreach(var item in a.fdict)
                 {
-                    if(item.Value == 0 )
+                    if(item.Value == 0 || item.Key == 11 )
                         continue;
                     conn = new MySqlConnection(connStr);
                     Console.WriteLine("Connecting to MySQL...");
@@ -186,8 +208,8 @@ namespace MySqlAccess
                     conn.Close();
                 }                                                                   
                   //////////////////// insert topiings           
-                  foreach( var item in a.toppings)
-                {
+                  foreach( var item in a.toppings) { 
+             
 
                     conn = new MySqlConnection(connStr);
                     Console.WriteLine("Connecting to MySQL...");
@@ -196,7 +218,7 @@ namespace MySqlAccess
                    
                     sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount)"+
                          "VALUES(" + id + "," + round_number + "," +item + "," + "1" + ");";
-
+                    Console.WriteLine("I WAS HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
                     cmd = new MySqlCommand(sql, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
@@ -297,7 +319,45 @@ namespace MySqlAccess
 
             return all;
         }
+ 
+          
+     
+        public static void createA()
+        {
+            ArrayList all = new ArrayList();
 
+            try
+            {
+                MySqlConnection conn = new MySqlConnection(connStr);
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                string sql = "use ice_cream_shop";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.ExecuteNonQuery();
+                sql = "create temporary table a as (SELECT ice_cream_shop.orders.id_INGREDIENT , sum(amount) as amount FROM ice_cream_shop.orders group by ice_cream_shop.orders.id_INGREDIENT);";
+                cmd = new MySqlCommand(sql, conn);
+                cmd.ExecuteNonQuery();
+                sql = "select item FROM ice_cream_shop.ingredients join a on ice_cream_shop.ingredients.id_INGREDIENT="
+                    + "a.id_INGREDIENT order by a.amount DESC limit 1;";
+                cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                if(rdr.Read())
+                {
+                    Object[] numb = new Object[rdr.FieldCount];
+                    rdr.GetValues(numb);
+                    Console.WriteLine((string)numb[0]);  
+                }
+                rdr.Close();
+                conn.Close();
+           }      
+            catch (Exception ex)
+            {
+                  Console.WriteLine(ex.ToString());
+            }
+
+        }
+         
         public  static int getId() {
             int ans= -5;
               // open connection 
@@ -320,7 +380,7 @@ namespace MySqlAccess
             rdr.Close();
             return ans;
         }
-
     }
+    
 
 }
