@@ -12,7 +12,7 @@ namespace MySqlAccess
 {
     class MySqlAccess
     {
-          static string connStr = "server=127.0.0.1;user=root;port=3306; password=Chrisbar1@";
+          static string connStr = "server=127.0.0.1;user=root;port=3306; password=Shani41128";
 
          public static void deleteOrderFromDB(int id)
         {

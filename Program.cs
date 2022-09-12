@@ -42,6 +42,7 @@ price = 0;
 package = -1;
 toppingsArraylist.Clear();
 iceCreamBallsNumber = 0;
+
 Console.WriteLine("Hi! Welcome to our Ice Cream shop");
 Console.WriteLine("Please choose a task:");
 Console.WriteLine("1 - order an ice cream");
@@ -61,6 +62,7 @@ MySqlAccess.MySqlAccess.insertObject_Sale(s);
 
     
 ANOTHER_ORDER:
+
 round_number++;
 package = -1;
 toppingsArraylist.Clear();
@@ -98,11 +100,13 @@ for (int i = 1; i < 11; i++)
 BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, round_number, ref fDict, package);
 
 Console.WriteLine("Please choose an option: \n");
-Console.WriteLine("1 - coninue with the order");
-Console.WriteLine("9 - edit the order(start the order from scratch!");
+Console.WriteLine("1 - continue with the order");
+Console.WriteLine("9 - edit the order(start the order from scratch!)");
 userInput = Int32.Parse(Console.ReadLine());
 if(userInput == 9  )
+{
     goto NEW_ORDER;
+}
 
 /// insert the round of the order to data base 
 BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, round_number, ref fDict, package);
@@ -176,6 +180,7 @@ userInput = Int32.Parse(Console.ReadLine());
             Console.WriteLine("1 - Check the bill");
             Console.WriteLine("2 - New Order");
             Console.WriteLine("3 - exit");
+            Console.WriteLine("4 - Goto sales summary");
             userInput = Int32.Parse(Console.ReadLine());
 
             switch (userInput)
@@ -189,6 +194,23 @@ userInput = Int32.Parse(Console.ReadLine());
                 case 3:
                     Console.WriteLine("Thanks! Hope to see you next time");
                     System.Environment.Exit(0);
+                    break;
+                case 4:
+                    Console.WriteLine("Please choose a task:");
+                    Console.WriteLine("1 - View daily report");
+                    Console.WriteLine("2 - View incomplete sales");
+                    userInput = Int32.Parse(Console.ReadLine());
+
+                    if(userInput == 1)
+                    {
+                        Console.WriteLine("You chose daily report");
+                    }
+
+                    if(userInput == 2)
+                    {
+                        Console.WriteLine("You chose incomplete sales");
+                    }
+                    goto NEW_ORDER;
                     break;
             }
 
