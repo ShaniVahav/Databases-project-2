@@ -8,6 +8,24 @@ namespace BusinessLogic
   
     public class Logic
     {
+        public static void getMostCommonIN(int id) { 
+            string sql = null;
+        switch(id){
+            case 4 : 
+                    sql = "select item FROM ice_cream_shop.ingredients join a on ice_cream_shop.ingredients.id_INGREDIENT="+
+                                      "a.id_INGREDIENT order by a.amount DESC limit 1;";
+                        MySqlAccess.MySqlAccess.searchMostCommon( sql);     
+                        break;
+            case 5:
+                       sql = "select item FROM ice_cream_shop.ingredients join a on ice_cream_shop.ingredients.id_INGREDIENT="+
+                                      "a.id_INGREDIENT WHERE a.id_INGREDIENT < 11 order by a.amount DESC limit 1 ;";
+                        MySqlAccess.MySqlAccess.searchMostCommon( sql);     
+                        break ;
+                 }
+          
+           
+        }
+
 
           public static ArrayList fillTableIN()
         {
@@ -18,7 +36,14 @@ namespace BusinessLogic
                                   "Oreo" ,
                                   "coffee" ,
                                   "strawberry",
-                                  "mango" };
+                                  "mango",
+                                  "regular_cone",
+                                  "special_cone",
+                                  "box",
+                                  "TOPchoclate",
+                                  "TOPchoclate",
+                                  "TOP maple"
+            };
             
             return a;
         }

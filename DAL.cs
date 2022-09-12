@@ -12,7 +12,7 @@ namespace MySqlAccess
 {
     class MySqlAccess
     {
-          static string connStr = "server=127.0.0.1;user=root;port=3306; password=Shani41128";
+          static string connStr = "server=127.0.0.1;user=root;port=3306; password=Chrisbar1@";
 
         // inspiration from https://www.youtube.com/watch?v=Die4mKMQ1_8
         public static void get_incompleteSales()
@@ -207,7 +207,9 @@ namespace MySqlAccess
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }                                                                   
-                  //////////////////// insert topiings           
+                  //////////////////// insert topiings          
+                  ///
+
                   foreach( var item in a.toppings) { 
              
 
@@ -321,7 +323,7 @@ namespace MySqlAccess
  
           
      
-        public static void createA()
+        public static void searchMostCommon(string str)
         {
             ArrayList all = new ArrayList();
 
@@ -333,11 +335,11 @@ namespace MySqlAccess
                 string sql = "use ice_cream_shop";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.ExecuteNonQuery();
-                sql = "create temporary table a as (SELECT ice_cream_shop.orders.id_INGREDIENT , sum(amount) as amount FROM ice_cream_shop.orders group by ice_cream_shop.orders.id_INGREDIENT);";
+                sql = "create temporary table a as (SELECT ice_cream_shop.orders.id_INGREDIENT"+
+                    ",sum(amount) as amount FROM ice_cream_shop.orders group by ice_cream_shop.orders.id_INGREDIENT);";
                 cmd = new MySqlCommand(sql, conn);
                 cmd.ExecuteNonQuery();
-                sql = "select item FROM ice_cream_shop.ingredients join a on ice_cream_shop.ingredients.id_INGREDIENT="
-                    + "a.id_INGREDIENT order by a.amount DESC limit 1;";
+                sql = str;
                 cmd = new MySqlCommand(sql, conn);
                 MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -354,6 +356,7 @@ namespace MySqlAccess
             {
                   Console.WriteLine(ex.ToString());
             }
+
 
         }
          
