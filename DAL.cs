@@ -12,7 +12,7 @@ namespace MySqlAccess
 {
     class MySqlAccess
     {
-          static string connStr = "server=127.0.0.1;user=root;port=3306; password=Chrisbar1@";
+          static string connStr = "server=127.0.0.1;user=root;port=3306; password=Shani41128";
 
         // inspiration from https://www.youtube.com/watch?v=Die4mKMQ1_8
         public static void get_incompleteSales()
@@ -218,7 +218,6 @@ namespace MySqlAccess
                    
                     sql = "INSERT INTO ice_cream_shop.ORDERS(id_ORDER,ROUND_NUMBER,id_INGREDIENT,amount)"+
                          "VALUES(" + id + "," + round_number + "," +item + "," + "1" + ");";
-                    Console.WriteLine("I WAS HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
                     cmd = new MySqlCommand(sql, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
