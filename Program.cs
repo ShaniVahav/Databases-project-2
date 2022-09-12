@@ -105,7 +105,7 @@ for (int i = 1; i < 11; i++)
     Console.WriteLine("2 - special cone");
     Console.WriteLine("3 - box");
     userInput = Int32.Parse(Console.ReadLine());
-    create_an_order.flavours(ref fDict, ref iceCreamBallsNumber);
+    create_an_order.flavours(ref fDict, ref iceCreamBallsNumber, userInput);
 
     switch (userInput)
     {
@@ -123,13 +123,12 @@ for (int i = 1; i < 11; i++)
             break;
     }
 /// insert the round of the order to data base 
-BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, round_number, ref fDict, package);
 
 Console.WriteLine("Do you want to edit your order?");
-Console.WriteLine("1 - No");
-Console.WriteLine("2 - Yes");
+Console.WriteLine("1 - Yes");
+Console.WriteLine("2 - No");
 userInput = Int32.Parse(Console.ReadLine());
-if(userInput == 2  )
+if(userInput == 1  )
 {
     goto EDIT;
 }
@@ -183,8 +182,9 @@ if (package == 13)
         case 3:
             price += 23;
             break;
-        DEFAULT:
+        default:
             price += 23 + (iceCreamBallsNumber-3)*6;
+            break;
     }
 }
 price += toppingsArraylist.Count*2;
@@ -194,6 +194,7 @@ Console.WriteLine("1 - Pay (After payment, the order cannot be canceled)");
 Console.WriteLine("2 - Delete");
 Console.WriteLine("3 - Add another order");
 Console.WriteLine("4 - Get most common ingredient");
+Console.WriteLine("5 - Get most common flavour");
 userInput = Int32.Parse(Console.ReadLine());
 
     switch (userInput)
@@ -236,6 +237,9 @@ userInput = Int32.Parse(Console.ReadLine());
             goto ANOTHER_ORDER;
             break;
          case 4 :
-            MySqlAccess.MySqlAccess.createA();
+           BusinessLogic.Logic.getMostCommonIN(userInput);
         break;
+        case 5:
+             BusinessLogic.Logic.getMostCommonIN(userInput);
+             break ;
     }

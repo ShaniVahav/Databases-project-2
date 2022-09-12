@@ -8,11 +8,13 @@ using System.Windows.Markup;
 using System.Reflection.PortableExecutable;
 using System.Collections.Generic;
 
+
 namespace MySqlAccess
 {
     class MySqlAccess
     {
-          static string connStr = "server=127.0.0.1;user=root;port=3306; password=Chrisbar1@";
+    
+        static string connStr = "server=127.0.0.1;user=root;port=3306; password=Shani41128";
 
         // inspiration from https://www.youtube.com/watch?v=Die4mKMQ1_8
         public static void get_incompleteSales()

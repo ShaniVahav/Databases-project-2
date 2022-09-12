@@ -107,48 +107,59 @@ namespace BusinessLogic
 
             public static void toppings_for_regular(ref Dictionary<int, int> fDict, ref int number, ref ArrayList toppingsArraylist)
             {
-            Dictionary<string , int> Tdict= new Dictionary<string, int>(); 
-           Tdict.Add("chocolate",14);
-           Tdict.Add("peanuts",15);
-           Tdict.Add("maple",16);
                 if (number < 2)
                     return;
-            removeToppings(ref fDict, ref Tdict, ref toppingsArraylist);
-        }
-        public static void removeToppings(ref Dictionary<int, int> fDict, ref Dictionary<string,int> Tdict,ref ArrayList toppingsArraylist)
-        {
-            if (fDict[3] > 0 || fDict[1] > 0)
-                Tdict.Remove("chocolate");
-            if (fDict[2] > 0)
-                Tdict.Remove("maple");
-            foreach (var item in Tdict) { 
-                string key = item.Key;
-                int value = item.Value;
-                addingCheak(key,value, ref toppingsArraylist);
-            }
-        }
-    public static void addingCheak(string key , int value , ref ArrayList toppingsArraylist)
-            {
-                Console.WriteLine("press 1 - to add " + key + ", 0 otherwise");
-                int userInput = Int32.Parse(Console.ReadLine());
-                if (userInput == 1)
-                    toppingsArraylist.Add(value);
-                Console.WriteLine(toppingsArraylist.ToString());
-            } 
-             
+                Dictionary<string , int> Tdict= new Dictionary<string, int>(); 
+                Tdict.Add("chocolate",14);
+                Tdict.Add("peanuts",15);
+                Tdict.Add("maple",16);
+                
+                removeToppings(ref fDict, ref Tdict, ref toppingsArraylist);
+            }             
             
-        public static void toppings_for_special(ref Dictionary<int, int> fDict, ref ArrayList toppingsArraylist)
-        {
-             Dictionary<string , int> Tdict= new Dictionary<string, int>(); 
-            Tdict.Add("chocolate",14);
-           Tdict.Add("peanuts",15);
-           Tdict.Add("maple",16);
-            removeToppings(ref fDict, ref Tdict, ref toppingsArraylist);
-        }
+            public static void toppings_for_special(ref Dictionary<int, int> fDict, ref ArrayList toppingsArraylist)
+            {
+                Dictionary<string , int> Tdict= new Dictionary<string, int>(); 
+                Tdict.Add("chocolate",14);
+                Tdict.Add("peanuts",15);
+                Tdict.Add("maple",16);
+              
+                removeToppings(ref fDict, ref Tdict, ref toppingsArraylist);
+            }
+
             public static void toppings_for_box(ref Dictionary<int, int> fDict, ref ArrayList toppingsArraylist)
             {
                 toppings_for_special(ref fDict, ref toppingsArraylist);
             }
+
+             public static void removeToppings(ref Dictionary<int, int> fDict, ref Dictionary<string,int> Tdict,ref ArrayList toppingsArraylist)
+            {
+                if (fDict[1] > 0 || fDict[3] > 0)
+                    Tdict.Remove("chocolate");
+                if (fDict[2] > 0)
+                    Tdict.Remove("maple");
+
+                foreach (var item in Tdict)
+                { 
+                    string key = item.Key;
+                    int value = item.Value;
+                    // addingCheak(key,value, ref toppingsArraylist);
+                    Console.WriteLine($"Do you want topping of {key}?");
+                    Console.WriteLine("1 - Yes");
+                    Console.WriteLine("2 - No");
+                    int userInput = Int32.Parse(Console.ReadLine());
+                    if (userInput == 1)
+                    {
+                        toppingsArraylist.Add(value);
+                    }
+                }
+            }
+
+            // public static void addingCheak(string key , int value , ref ArrayList toppingsArraylist)
+            // {
+               
+            //    // Console.WriteLine(toppingsArraylist.ToString());
+            // } 
 
         }
 
