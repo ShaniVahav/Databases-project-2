@@ -65,14 +65,20 @@ namespace BusinessLogic
         public class create_an_order
         {
 
-            public static void flavours(ref Dictionary<int, int> fDict, ref int iceCreamBallsNumber)
+            public static void flavours(ref Dictionary<int, int> fDict, ref int iceCreamBallsNumber, int package)
             {
-                int max_amount_of_balls = 3;
                 int current_amount = 0;
-                while (current_amount < max_amount_of_balls)
+                while (true)
                 {
-
-                    Console.WriteLine("choose between 1-3 balls");
+                    if(package != 3)
+                    {
+                        Console.WriteLine("You can choose between 1-3 balls");
+                    }
+                    if(package == 3)
+                    {
+                        Console.WriteLine("Choose tastes");
+                    }
+                    
                     Console.WriteLine("0- forward with the order\n" +
                                   "1 - chocolate\n" +
                                   "2 - vanilla\n" +
@@ -90,6 +96,12 @@ namespace BusinessLogic
                     fDict[userInput]++;
                     current_amount++;
                     iceCreamBallsNumber++;
+
+                    if(package != 3)
+                    {
+                        if (current_amount == 3)
+                        break;
+                    }
                 }
             }
 
