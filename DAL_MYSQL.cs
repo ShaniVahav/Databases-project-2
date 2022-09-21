@@ -163,21 +163,6 @@ namespace MySqlAccess
         {
             try
             {
-
-                ///////
-                // MySqlConnection conn = new MySqlConnection(connStr);
-                // Console.WriteLine("Connecting to MySQL...");
-                // conn.Open();
-            
-                // //string str = ingredient;
-                // sql = "INSERT INTO `ice_cream_shop`.`Ingredients` (`item`) " +
-                // "VALUES ('" + ingredient + "');";
-            
-                // MySqlCommand cmd = new MySqlCommand(sql, conn);
-                // cmd.ExecuteNonQuery();
-                // conn.Close();
-                // /////////
-
                 string sql = null;
 
                 MySqlConnection conn = new MySqlConnection(connStr);

@@ -138,8 +138,9 @@ for (int i = 1; i < 11; i++)
             create_an_order.toppings_for_box(ref fDict, ref toppingsArraylist);
             break;
     }
-/// insert the round of the order to data base 
 
+/// insert the round of the order to data base 
+Console.WriteLine("\n________________________________\n");
 Console.WriteLine("Do you want to edit your order?");
 Console.WriteLine("1 - Yes");
 Console.WriteLine("2 - No");
@@ -149,7 +150,7 @@ if(userInput == 1  )
     goto EDIT;
 }
 
-/// insert the round of the order to data base 
+// insert the round of the order to database 
 BusinessLogic.Logic.fillTableOrder(db, ref toppingsArraylist, round_number, ref fDict, package);
 
 // calculate the price:
@@ -218,8 +219,11 @@ userInput = Int32.Parse(Console.ReadLine());
         case 1:  // chose to pay
             sum_price += price; 
             sales_amount++;         
-            // update the price in data base 
-            MySqlAccess.MySqlAccess.update_price(price);
+            // update the price in database 
+            if(db == 1)
+                MySqlAccess.MySqlAccess.update_price(price);
+            else
+                MongoAccess.MongoAccess.update_price_mongo(price);
 
             Console.WriteLine("Please choose a task:");
             Console.WriteLine("1 - Check the bill");

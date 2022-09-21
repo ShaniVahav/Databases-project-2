@@ -58,8 +58,8 @@ namespace BusinessLogic
             iceCreamOrder a = new(package, fdict, toppings);
             if(db == 1) // mysql
                 MySqlAccess.MySqlAccess.insertObjectToOrders(a, round_number);
-            else
-                MySqlAccess.MySqlAccess.insertObjectToOrders(a, round_number);
+            else  // mongo
+                MongoAccess.MongoAccess.insertObjectToOrders_mongo(a, round_number);
         }
     }
 

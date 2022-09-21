@@ -12,7 +12,7 @@ namespace BusinessEntities
     class iceCreamOrder
     {
         public int  package;
-        public  Dictionary<int, int> fdict;
+        public Dictionary<int, int> fdict;
         public ArrayList toppings;
 
         public int Package { get => package; set => package = value; }
@@ -24,9 +24,10 @@ namespace BusinessEntities
             this.toppings = toppings;
         }
     }
+
     class Sale
     {
-        public int id = 0;
+        public static int id = 0;
         public DateTime date;
         public int price;
 
@@ -35,6 +36,11 @@ namespace BusinessEntities
             this.date = date;
             this.price = price;
             id++;
+        }
+
+        public static int getId()
+        {
+            return id;
         }
     }
 }
