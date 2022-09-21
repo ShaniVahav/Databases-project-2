@@ -13,8 +13,6 @@ using System.Reflection.PortableExecutable;
 
 // See https://aka.ms/new-console-template for more information
 
-Console.WriteLine("Please create tables first, by pressing '1'");
-
 Stopwatch stopwatch = new Stopwatch();
 int sales_amount = 0;
 int sum_price = 0;
@@ -31,12 +29,33 @@ for (int i = 1; i < 11; i++)
 {
     fDict.Add(i, 0);
 }
-Console.WriteLine("1 - create tables");
-userInput = Int32.Parse(Console.ReadLine());
+
+Console.WriteLine("Please choose a database");
+Console.WriteLine("1 - MySql");
+Console.WriteLine("2 - MongoDB");
+int db = Int32.Parse(Console.ReadLine());
+
+if(db == 1)
+{
+    Console.WriteLine("Please create tables first, by pressing '1'");
+    Console.WriteLine("1 - create tables");
+    userInput = Int32.Parse(Console.ReadLine());
 
 
-if (userInput == 1)
-    Logic.createTables();
+    if (userInput == 1)
+        Logic.createTables();
+}
+
+if(db == 2)
+{
+    Console.WriteLine("Please create tables first, by pressing '1'");
+    Console.WriteLine("1 - create tables");
+    userInput = Int32.Parse(Console.ReadLine());
+    if(userInput == 1)
+    {
+        MongoAccess.MongoAccess.MongoTables();
+    }
+}
 
 NEW_ORDER:
 round_number = 0;
