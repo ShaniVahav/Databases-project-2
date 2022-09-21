@@ -12,19 +12,15 @@ namespace MongoAccess
     {
         public static void MongoTables()
         {
-            Console.WriteLine("MongoTables");
-            // connection 
-            var settings = MongoClientSettings.FromConnectionString("mongodb://127.0.0.1:27017");         
-            settings.ServerApi = new ServerApi(ServerApiVersion.V1);
-
+            // connection
+            var client = new MongoClient("mongodb://localhost:27017");
             // creation of the db
-            var client = new MongoClient(settings);
-            var database = client.GetDatabase("ice_cream_shop");
+            IMongoDatabase database = client.GetDatabase("ice_cream_shop");
 
             // creation of the collections
-            // var ingredients = database.GetCollection<BsonDocument> ("ingredients");
-            // var orders = database.GetCollection<BsonDocument> ("orders");
-            // var sales = database.GetCollection<BsonDocument> ("sales");
+            var ingredients = database.GetCollection<BsonDocument> ("ingredients");
+            var orders = database.GetCollection<BsonDocument> ("orders");
+            var sales = database.GetCollection<BsonDocument> ("sales");
 
             var dbList = database.ListCollectionNames().ToList();
 
@@ -34,6 +30,113 @@ namespace MongoAccess
                 Console.WriteLine(db);
             }
         }
+
+        public static void insertObject_Sale(Sale s)
+        {
+            List<BsonDocument> documents = new List<BsonDocument>();
+             var document = new BsonDocument
+                { 
+                    {
+                     "sale", new BsonDocument
+                        {
+                            {"id", s.id },
+                            {"date", s.date},
+                            {"price", s.price}
+                        }
+                    }
+                };
+            documents.Add(document);
+
+            var client = new MongoClient("mongodb://localhost:27017");
+            IMongoDatabase database = client.GetDatabase("ice_cream_shop");
+            var sales = database.GetCollection<BsonDocument> ("sales");
+            sales.InsertMany(documents);
+        }
+
+
+        public static void insertObjectToOrders(iceCreamOrder a, int round_number)
+        {
+            Console.WriteLine("insertObjectToOrders");
+            // try
+            // {
+            //     int id = Sale.id;
+            //     List<BsonDocument> documents = new List<BsonDocument>();
+
+            //     // insert package
+            //     var document = new BsonDocument
+            //         { 
+            //             {
+            //             "order", new BsonDocument
+            //                 {
+            //                     {"id_order", id },
+            //                     {"round_number", round_number},
+            //                     {"id_ingredient", a.package},
+            //                     {"amount", 1};
+            //                 }
+            //             }
+            //         };
+            //     documents.Add(document);
+
+            //     // insert flavours 
+            //     foreach(var item in a.fdict)
+            //     {
+
+            //         if(item.Value == 0 || item.Key == 11 )
+            //             continue;
+
+            //         var document = new BsonDocument
+            //         { 
+            //             {
+            //             "flavour", new BsonDocument
+            //                 {
+            //                     {"id_order", id },
+            //                     {"round_number", round_number},
+            //                     {"id_ingredient", item.key},
+            //                     {"amount", item.value};
+            //                 }
+            //             }
+            //         };
+
+            //     documents.Add(document);
+            //     } 
+
+
+            //     // insert toppings         
+            //     foreach( var item in a.toppings)
+            //     {       
+            //         var document = new BsonDocument
+            //         { 
+            //             {
+            //             "topping", new BsonDocument
+            //                 {
+            //                     {"id_order", id },
+            //                     {"round_number", round_number},
+            //                     {"id_ingredient", item},
+            //                     {"amount", 1};
+            //                 }
+            //             }
+            //         };
+
+            //         documents.Add(document);
+            //     }
+
+            //     var client = new MongoClient("mongodb://localhost:27017");
+            //     IMongoDatabase database = client.GetDatabase("ice_cream_shop");
+            //     var orders = database.GetCollection<BsonDocument> ("orders");
+            //     orders.insert(document);    
+            // }
+
+            // catch (Exception ex)
+            // {
+            //     {   
+            //         Console.WriteLine("insert object func");
+            //         Console.WriteLine(ex.ToString());
+            //     }
+
+            // }
+
+        }
+
 
         public static void fillDocuments (List<MongoOrder> orders) //to make it by interface, rename to fillData
         {

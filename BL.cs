@@ -53,10 +53,13 @@ namespace BusinessLogic
             MySqlAccess.MySqlAccess.createTables();
         }
 
-        public static void fillTableOrder(ref ArrayList toppings, int round_number, ref Dictionary<int, int> fdict, int package)
+        public static void fillTableOrder(int db, ref ArrayList toppings, int round_number, ref Dictionary<int, int> fdict, int package)
         {   
             iceCreamOrder a = new(package, fdict, toppings);
-            MySqlAccess.MySqlAccess.insertObjectToOrders(a, round_number);
+            if(db == 1) // mysql
+                MySqlAccess.MySqlAccess.insertObjectToOrders(a, round_number);
+            else
+                MySqlAccess.MySqlAccess.insertObjectToOrders(a, round_number);
         }
     }
 

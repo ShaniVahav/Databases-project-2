@@ -26,7 +26,7 @@ namespace BusinessEntities
     }
     class Sale
     {
-        // public int  package;
+        public int id = 0;
         public DateTime date;
         public int price;
 
@@ -34,6 +34,7 @@ namespace BusinessEntities
         {
             this.date = date;
             this.price = price;
+            id++;
         }
     }
 }

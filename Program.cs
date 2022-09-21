@@ -48,13 +48,7 @@ if(db == 1)
 
 if(db == 2)
 {
-    Console.WriteLine("Please create tables first, by pressing '1'");
-    Console.WriteLine("1 - create tables");
-    userInput = Int32.Parse(Console.ReadLine());
-    if(userInput == 1)
-    {
-        MongoAccess.MongoAccess.MongoTables();
-    }
+    MongoAccess.MongoAccess.MongoTables();
 }
 
 NEW_ORDER:
@@ -103,7 +97,10 @@ EDIT:
 // create a sale
 DateTime date = DateTime.Now;
 Sale s = new Sale(date, price);
-MySqlAccess.MySqlAccess.insertObject_Sale(s);
+if(db == 1)
+    MySqlAccess.MySqlAccess.insertObject_Sale(s);
+else
+    MongoAccess.MongoAccess.insertObject_Sale(s);
 
     
 ANOTHER_ORDER:
@@ -153,7 +150,7 @@ if(userInput == 1  )
 }
 
 /// insert the round of the order to data base 
-BusinessLogic.Logic.fillTableOrder(ref toppingsArraylist, round_number, ref fDict, package);
+BusinessLogic.Logic.fillTableOrder(db, ref toppingsArraylist, round_number, ref fDict, package);
 
 // calculate the price:
 if (package == 11)
