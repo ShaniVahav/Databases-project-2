@@ -93,7 +93,7 @@ if (userInput == 3)
                     goto NEW_ORDER;
 }
 
-
+EDIT:
 // create a sale
 DateTime date = DateTime.Now;
 Sale s = new Sale(date, price);
@@ -102,9 +102,6 @@ if(db == 1)
 else
     MongoAccess.MongoAccess.insertObject_Sale(s);
 
-EDIT:
-BusinessLogic.edit.delete(db);
-goto NEW_ORDER;
 
 ANOTHER_ORDER:
 round_number++;
@@ -149,6 +146,8 @@ Console.WriteLine("2 - No");
 userInput = Int32.Parse(Console.ReadLine());
 if(userInput == 1  )
 {
+    BusinessLogic.edit.delete(db);
+    round_number = 0;
     goto EDIT;
 }
 

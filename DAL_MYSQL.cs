@@ -38,6 +38,26 @@ namespace MySqlAccess
                 }
             }
         }
+
+        //  public static void deleteSaleFromDB(int id)
+        // {
+        //        try
+        //     {
+        //         MySqlConnection conn = new MySqlConnection(connStr);
+        //         Console.WriteLine("\nConnecting to MySQL...");
+        //         conn.Open();
+        //         string sql = "DELETE FROM ice_cream_shop.sales WHERE id_SALE="    +id+   ";";
+        //         MySqlCommand cmd = new MySqlCommand(sql, conn);
+        //         cmd.ExecuteNonQuery();
+        //         conn.Close();
+        //      }  
+        //            catch (Exception ex)
+        //     {
+                
+        //             Console.WriteLine(ex.ToString());
+        //     }
+        // }
+
          public static void deleteOrderFromDB(int id)
         {
                try
@@ -45,14 +65,9 @@ namespace MySqlAccess
                 MySqlConnection conn = new MySqlConnection(connStr);
                 Console.WriteLine("\nConnecting to MySQL...");
                 conn.Open();
-                string sql = "DELETE FROM ice_cream_shop.sales WHERE sale_id="    +id+   ";";
+                string sql = "DELETE FROM ice_cream_shop.orders WHERE id_ORDER="      +id+    ";";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
-                conn.Close();
-
-                conn.Open();
-                sql = "DELETE FROM ice_cream_shop.orders WHERE id_ORDER="      +id+    ";";
-                cmd = new MySqlCommand(sql, conn);
-                cmd.ExecuteNonQuery();;
+                cmd.ExecuteNonQuery();
                 conn.Close();
              }  
                    catch (Exception ex)
@@ -139,7 +154,7 @@ namespace MySqlAccess
                     "`id_INGREDIENT` INT NOT NULL," +
                     "`amount` INT NOT NULL," +
                     // "FOREIGN KEY (id_INGREDIENT) REFERENCES INGREDIENTS(id_INGREDIENT), " +
-                    "FOREIGN KEY(id_ORDER) REFERENCES SALES(id_SALE)," +
+                    // "FOREIGN KEY(id_ORDER) REFERENCES SALES(id_SALE)," +
                     "PRIMARY KEY (id_ORDER,ROUND_NUMBER,id_INGREDIENT));";
 
                 cmd = new MySqlCommand(sql, conn);

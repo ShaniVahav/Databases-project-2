@@ -178,9 +178,11 @@ namespace BusinessLogic
         
             public static void bill(DateTime date, int price)
             {
+                Console.WriteLine("\n____________________________________");
                 Console.WriteLine("Date: " + date);
                 Console.WriteLine("Price: " + price + " nis");
                 Console.WriteLine("Thank you! Hope to see you next time");
+                Console.WriteLine("____________________________________");
             }
         }
 }
