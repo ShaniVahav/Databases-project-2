@@ -260,9 +260,11 @@ userInput = Int32.Parse(Console.ReadLine());
             goto ANOTHER_ORDER;
             break;
          case 4 :
-           BusinessLogic.Logic.getMostCommonIN(userInput);
-        break;
+            BusinessLogic.Logic.getMostCommonIN(db, userInput);
+            goto NEW_ORDER;
+            break;
         case 5:
-             BusinessLogic.Logic.getMostCommonIN(userInput);
+             BusinessLogic.Logic.getMostCommonIN(db, userInput);
+             goto NEW_ORDER;
              break ;
     }
