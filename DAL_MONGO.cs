@@ -22,7 +22,32 @@ namespace MongoAccess
             var ingredients = database.GetCollection<BsonDocument> ("ingredients");
             var orders = database.GetCollection<BsonDocument> ("orders");
             var sales = database.GetCollection<BsonDocument> ("sales");
+
+            insert_ing();
         }
+
+        public static void insert_ing()
+        {
+            List<BsonDocument> documents = new List<BsonDocument>();
+            var document = new BsonDocument
+            {
+                {
+                //////It is desirable that the documents in mongo will be bsons. 
+                        "ingredients", new BsonDocument
+                            {
+
+                                {"choclate", 1 },{"vanila", 2 },{"mecupelet", 3 },{"Banana", 4 },{"orange", 5 },{"coconut", 6 },{"Oreo", 7 }
+                                ,{"coffee", 8},{"strawberry", 9 },{"mango",10 },{"regular_cone", 11 },{"special_cone", 12 },
+                                {"box", 13},{"TOPchoclate", 14},{"TOPpeanuts", 15},{"TOPmaple", 16}
+                                 
+                            }
+                 }       
+            };
+            var client = new MongoClient("mongodb://localhost:27017");
+            IMongoDatabase database = client.GetDatabase("ice_cream_shop");
+            var sales = database.GetCollection<BsonDocument> ("ingredients");
+            sales.InsertOne(document);
+         }
 
         public static void insertObject_Sale(Sale s)
         {

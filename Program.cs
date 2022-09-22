@@ -93,7 +93,7 @@ if (userInput == 3)
                     goto NEW_ORDER;
 }
 
-EDIT:
+
 // create a sale
 DateTime date = DateTime.Now;
 Sale s = new Sale(date, price);
@@ -102,9 +102,11 @@ if(db == 1)
 else
     MongoAccess.MongoAccess.insertObject_Sale(s);
 
-    
-ANOTHER_ORDER:
+EDIT:
+BusinessLogic.edit.delete(db);
+goto NEW_ORDER;
 
+ANOTHER_ORDER:
 round_number++;
 package = -1;
 toppingsArraylist.Clear();
