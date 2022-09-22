@@ -27,6 +27,7 @@ namespace MySqlAccess
                 {
                     using(var reader = cmd.ExecuteReader())
                     {
+                        Console.WriteLine("_______________________________");
                         while(reader.Read())  // read row by row
                         {
                             var id = reader.GetString(0);
@@ -34,29 +35,12 @@ namespace MySqlAccess
 
                             Console.WriteLine($"ID sale: {id}, date: {date}");
                         }
+                        Console.WriteLine("_______________________________");
                     }
                 }
             }
         }
 
-        //  public static void deleteSaleFromDB(int id)
-        // {
-        //        try
-        //     {
-        //         MySqlConnection conn = new MySqlConnection(connStr);
-        //         Console.WriteLine("\nConnecting to MySQL...");
-        //         conn.Open();
-        //         string sql = "DELETE FROM ice_cream_shop.sales WHERE id_SALE="    +id+   ";";
-        //         MySqlCommand cmd = new MySqlCommand(sql, conn);
-        //         cmd.ExecuteNonQuery();
-        //         conn.Close();
-        //      }  
-        //            catch (Exception ex)
-        //     {
-                
-        //             Console.WriteLine(ex.ToString());
-        //     }
-        // }
 
          public static void deleteOrderFromDB(int id)
         {

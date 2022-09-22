@@ -79,15 +79,17 @@ if (userInput == 3)
 
                     if(userInput == 1)
                     {
+                        Console.WriteLine("\n____________________________________");
                         Console.WriteLine("Number of sales: " + sales_amount);
                         Console.WriteLine("Total sales amount: " + sum_price + " nis");
                         double avg = sum_price/sales_amount;
                         Console.WriteLine("Average sale amount: " + avg + " nis");
+                        Console.WriteLine("____________________________________");
                     }
 
                     if(userInput == 2)
                     {
-                      MySqlAccess.MySqlAccess.get_incompleteSales();
+                        Logic.incompleteSales(db);
                     }
 
                     goto NEW_ORDER;

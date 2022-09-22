@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using MongoDB.Bson;
 
+using MongoDB.Bson.Serialization;
 using BusinessEntities;
 using BusinessLogic;
 using System.Collections;
@@ -168,8 +169,25 @@ namespace MongoAccess
             var orders = database.GetCollection<BsonDocument>("orders");
 
             var _filter = Builders<BsonDocument>.Filter.Eq("id_order", id);
-           // var _update = Builders<BsonDocument>.Update.Set("price", _price);
             orders.DeleteMany(_filter);
+        }
+
+
+        public static void get_incompleteSalesMongo()
+        {
+            MongoClient client = new MongoClient("mongodb://localhost:27017");
+            var database = client.GetDatabase("ice_cream_shop");
+            var sales = database.GetCollection<BsonDocument>("sales");
+
+            var _filter = Builders<BsonDocument>.Filter.Eq("price", 0);
+            var doc = sales.Find(_filter).ToList();
+
+            Console.WriteLine("_______________________________");
+            foreach(BsonDocument _doc in doc)
+            {
+                Console.WriteLine(_doc.ToString());
+            }   
+            Console.WriteLine("_______________________________");
         }
 
     }

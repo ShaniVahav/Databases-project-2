@@ -61,6 +61,15 @@ namespace BusinessLogic
             else  // mongo
                 MongoAccess.MongoAccess.insertObjectToOrders_mongo(a, round_number);
         }
+
+        public static void incompleteSales(int db)
+        {
+            if(db==1)
+                MySqlAccess.MySqlAccess.get_incompleteSales();
+            else
+                MongoAccess.MongoAccess.get_incompleteSalesMongo();
+        }
+         
     }
 
 
