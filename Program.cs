@@ -139,7 +139,7 @@ for (int i = 1; i < 11; i++)
             break;
     }
 
-/// insert the round of the order to data base 
+// insert the round of the order to data base 
 Console.WriteLine("\n________________________________\n");
 Console.WriteLine("Do you want to edit your order?");
 Console.WriteLine("1 - Yes");
@@ -248,7 +248,7 @@ userInput = Int32.Parse(Console.ReadLine());
             break;
 
         case 2:
-            BusinessLogic.edit.delete();
+            BusinessLogic.edit.delete(db);
             Console.WriteLine("Thank you for your time");
             goto NEW_ORDER;
             break;

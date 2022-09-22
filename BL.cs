@@ -158,22 +158,22 @@ namespace BusinessLogic
                 }
             }
 
-            // public static void addingCheak(string key , int value , ref ArrayList toppingsArraylist)
-            // {
-               
-            //    // Console.WriteLine(toppingsArraylist.ToString());
-            // } 
-
         }
 
 
         public class edit
         {
-            public static void delete()
+            public static void delete(int db)
             {
-                int id = MySqlAccess.MySqlAccess.getId();
-                Console.WriteLine(" The id is "+ id);
-                MySqlAccess.MySqlAccess.deleteOrderFromDB(id);
+                if (db ==1)
+                {
+                    int id = MySqlAccess.MySqlAccess.getId();
+                    MySqlAccess.MySqlAccess.deleteOrderFromDB(id);
+                }
+                else
+                {
+                    MongoAccess.MongoAccess.deleteOrder_mongo(Sale.getId());
+                }
             }
         
             public static void bill(DateTime date, int price)

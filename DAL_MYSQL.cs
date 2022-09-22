@@ -43,13 +43,12 @@ namespace MySqlAccess
                try
             {
                 MySqlConnection conn = new MySqlConnection(connStr);
-                Console.WriteLine("Connecting to MySQL...");
+                Console.WriteLine("\nConnecting to MySQL...");
                 conn.Open();
                 string sql = "DELETE FROM ice_cream_shop.sales WHERE sale_id="    +id+   ";";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 conn.Close();
 
-                Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
                 sql = "DELETE FROM ice_cream_shop.orders WHERE id_ORDER="      +id+    ";";
                 cmd = new MySqlCommand(sql, conn);

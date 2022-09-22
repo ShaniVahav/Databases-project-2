@@ -13,8 +13,9 @@ namespace MongoAccess
         public static void MongoTables()
         {
             // connection
-            var client = new MongoClient("mongodb+srv://localhost:27017@demodata-uymyo.mongodb.net/test?retryWrites=true&w=majority");
+            var client = new MongoClient("mongodb://localhost:27017");
             // creation of the db
+            client.DropDatabase("ice_cream_shop");
             IMongoDatabase database = client.GetDatabase("ice_cream_shop");
 
             // creation of the collections
@@ -50,11 +51,10 @@ namespace MongoAccess
 
                 // insert package
                 var document = new BsonDocument
-                    { 
-                        {
-                        "package", new BsonDocument
+                    {                        
+                        {"id_order", id},
+                        {"package", new BsonDocument
                             {
-                                {"id_order", id },
                                 {"round_number", round_number},
                                 {"id_ingredient", a.package},
                                 {"amount", 1}
@@ -73,10 +73,9 @@ namespace MongoAccess
 
                     document = new BsonDocument
                     { 
-                        {
-                        "flavour", new BsonDocument
+                        {"id_order", id },
+                        {"flavour", new BsonDocument
                             {
-                                {"id_order", id },
                                 {"round_number", round_number},
                                 {"id_ingredient", k},
                                 {"amount", v}
@@ -93,10 +92,9 @@ namespace MongoAccess
                 { 
                     document = new BsonDocument
                     { 
-                        {
-                        "topping", new BsonDocument
+                        {"id_order", id },
+                        {"topping", new BsonDocument
                             {
-                                {"id_order", id },
                                 {"round_number", round_number},
                                 {"id_ingredient", item},
                                 {"amount", 1}
@@ -127,7 +125,6 @@ namespace MongoAccess
         public static void update_price_mongo(int _price)
         {  
             int _id = Sale.getId();
-            Console.WriteLine("\nid = " + _id + "\n");
             MongoClient client = new MongoClient("mongodb://localhost:27017");
 
             var database = client.GetDatabase("ice_cream_shop");
@@ -136,7 +133,18 @@ namespace MongoAccess
             var _filter = Builders<BsonDocument>.Filter.Eq("id_sale", _id);
             var _update = Builders<BsonDocument>.Update.Set("price", _price);
             sales.UpdateOne(_filter, _update);
-            Console.WriteLine("\nprice = " + _price);
+        }
+
+
+        public static void deleteOrder_mongo(int id)
+        {
+            MongoClient client = new MongoClient("mongodb://localhost:27017");
+            var database = client.GetDatabase("ice_cream_shop");
+            var orders = database.GetCollection<BsonDocument>("orders");
+
+            var _filter = Builders<BsonDocument>.Filter.Eq("id_order", id);
+           // var _update = Builders<BsonDocument>.Update.Set("price", _price);
+            orders.DeleteMany(_filter);
         }
 
     }
