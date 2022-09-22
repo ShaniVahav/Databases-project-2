@@ -13,7 +13,7 @@ namespace MongoAccess
         public static void MongoTables()
         {
             // connection
-            var client = new MongoClient("mongodb://localhost:27017");
+            var client = new MongoClient("mongodb+srv://localhost:27017@demodata-uymyo.mongodb.net/test?retryWrites=true&w=majority");
             // creation of the db
             IMongoDatabase database = client.GetDatabase("ice_cream_shop");
 
@@ -25,24 +25,19 @@ namespace MongoAccess
 
         public static void insertObject_Sale(Sale s)
         {
-            List<BsonDocument> documents = new List<BsonDocument>();
+           // List<BsonDocument> documents = new List<BsonDocument>();
              var document = new BsonDocument
-                { 
-                    {
-                     "sale", new BsonDocument
-                        {
-                            {"id", Sale.id },
-                            {"date", s.date},
-                            {"price", s.price}
-                        }
-                    }
+                {                         
+                    {"id_sale", Sale.id },
+                    {"date", s.date},
+                    {"price", s.price}  
                 };
-            documents.Add(document);
+            // documents.Add(document);
 
             var client = new MongoClient("mongodb://localhost:27017");
             IMongoDatabase database = client.GetDatabase("ice_cream_shop");
             var sales = database.GetCollection<BsonDocument> ("sales");
-            sales.InsertMany(documents);
+            sales.InsertOne(document);
         }
 
 
@@ -130,65 +125,19 @@ namespace MongoAccess
         }
 
         public static void update_price_mongo(int _price)
-        {
-            var client = new MongoClient("mongodb://localhost:27017");
+        {  
+            int _id = Sale.getId();
+            Console.WriteLine("\nid = " + _id + "\n");
+            MongoClient client = new MongoClient("mongodb://localhost:27017");
+
             var database = client.GetDatabase("ice_cream_shop");
-            var sales = database.GetCollection<BsonDocument> ("sales");
-            sales.updateOne({id:Sale.getId()}, {$set: {price:_price}});
+            var sales = database.GetCollection<BsonDocument>("sales");
+
+            var _filter = Builders<BsonDocument>.Filter.Eq("id_sale", _id);
+            var _update = Builders<BsonDocument>.Update.Set("price", _price);
+            sales.UpdateOne(_filter, _update);
+            Console.WriteLine("\nprice = " + _price);
         }
 
-
-        // public static void fillDocuments (List<MongoOrder> orders) //to make it by interface, rename to fillData
-        // {
-
-        //      List<BsonDocument> documents = new List<BsonDocument>();
-
-        //     //build list of all documents
-        //     foreach (var mongoOrderd in orders) {
-        //         var document = new BsonDocument
-        //         { 
-        //             {
-        //                 "viecle", new BsonDocument 
-        //                 { 
-        //                     { "owner", new BsonDocument { 
-        //                         {"Name", mongoOrderd.GetOwner().getName() },
-        //                         {"Phone",mongoOrderd.GetOwner().getPhone()},
-        //                         {"Addres",mongoOrderd.GetOwner().getAddress()} }},
-        //                     { "model", mongoOrderd.getVehicle().getManufacturer() },
-        //                     { "year" , mongoOrderd.getVehicle().getYear() },
-        //                     { "color", mongoOrderd.getVehicle().getColor() } 
-        //                 }
-        //             }, 
-        //             { 
-        //                 "task", new BsonDocument 
-        //                 { 
-        //                     { "name", mongoOrderd.getVtask().getName() },
-        //                     { "description" , mongoOrderd.getVtask().getDescription() },
-        //                     { "price", mongoOrderd.getVtask().getPrice() } 
-        //                 }
-        //             }, 
-        //             { "orderd_date", mongoOrderd.getOrderDate() },
-        //             { "complete_date",DateTime.Now},
-        //             { "completed", mongoOrderd.getCompleted() },
-        //             { "payed", mongoOrderd.getPayed() }
-        //         };
-
-        //         documents.Add(document);
-            
-        //     }
-
-        //     Console.WriteLine("list is ok");
-        //     //add them all to mongo
-
-        //     var settings = MongoClientSettings.FromConnectionString("mongodb+srv://user:password@cluster.mongodb.net/?retryWrites=true&w=majority");
-        //     settings.ServerApi = new ServerApi(ServerApiVersion.V1);
-        //     var client = new MongoClient(settings);
-        //     var database = client.GetDatabase("garage");
-        //     var collection = database.GetCollection<BsonDocument> ("orders");
-
-           
-        //     collection.InsertMany(documents);
-        //     //await collection.InsertOneAsync (document);
-        // }
     }
 }
